@@ -1,0 +1,71 @@
+Installing flyeye on a mac can be painful. I give no guarantees that the following procedure works, but it seems to be a possibility. This guide is probably incomplete, feel free to add anything to it.
+
+General warning: Please, if you try to use homebrew and pip and something doesnt work, dont let yourself be guided into using Macports or Fink. Using multiple package managers leads straight to hell.
+
+0a) install Xcode from the mac App store, or alternatively register as an Apple developer and get the command line tools for your version here: https://developer.apple.com/downloads
+
+0b) Install GCC: follow the instructions at
+https://wiki.helsinki.fi/display/HUGG/Installing+the+GNU+compilers+on+Mac+OS+X
+It might be possible to install gcc by something like 'brew install gcc' after step 1. I didn't try, but feel free to try.
+
+1) Install Homebrew
+   after installing, type in the terminal:
+	- brew update
+	- brew doctor
+
+2) Install python using: 
+	- brew install python
+
+
+3) You need to make sure the terminal uses the new version of python. go to your home folder and use a text editor to change the file '.bash_profile' (if it doesn't exist yet, create it, and add the line
+"PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/X11/bin" ). You need to tell it where to look for python. If you installed python via homebrew, add a line somewhere like
+
+export PATH=/usr/local/Cellar/python/<version>/bin:$PATH
+
+where <version> is the python version you installed (in my case: 2.7.7_2).
+
+
+4) Close the terminal and open a new one. Your new version of python came with pip. We will use pip to install a number of modules. Enter the following lines in the terminal:
+ 	- pip install ipython
+
+Again, you will need to tell the terminal where to find these packages. Open .bash_profile again (its in your home folder) and add a line:
+export PYTHONPATH=/usr/local/lib/python2.7/site-packages:$PYTHONPATH
+If you have a different python version, of course substitute the correct number.
+
+ 	- pip install numpy
+	- pip install scipy
+		This takes a while. Grab a coffee.
+	- brew install pkg-config (This is needed to get matplotlib to install without problems)
+ 	- pip install matplotlib (a great library for plotting your data!)
+ 	- pip install pillow (google this if it doesnt work)
+	
+
+5) You can now test your python packages from step 4 by trying to import them in ipython. Open ipython (type 'ipython' in the terminal) and then type statements like:
+import numpy
+If no error is generated, your package installed correctly. Try all installed packages, and also try 'import Tkinter'
+
+
+
+6) Install a current version of ffmpeg by typing "brew install ffmpeg" in a terminal
+	if you get errors that ffmpeg cannot be linked to the local folder, get permission to that folder by typing 'sudo chown -R $USER:admin /usr/local', and then 'brew link ffmpeg'
+
+
+
+7) Now the hard part: installing opencv. First make the brewing formula available: In a terminal, type 
+	- brew tap homebrew science' 
+Then, the most important step:
+	- brew install -vd -tbb opencv
+		- if libpng needs to be linked: do as in step 6. First type 'sudo chown -R $USER:admin /usr/local', and then 'brew link libpng'
+This might take a few minutes. Get a coffee.
+
+
+8) Python needs to be able to find your installation of opencv, which is in a different path from the stuff you installed via pip in step 4. Once more, open .bash_profile in your homefolder, and add a line ABOVE the previous PYTHONPATH line like:
+export PYTHONPATH=/usr/local/Cellar/opencv/2.4.9/lib/python2.7/site-packages:$PYTHONPATH
+(correct for your version of opencv and python)
+
+In ipython, you can try if your opencv installation worked by typing:
+import cv, cv2
+
+
+9) Copy some version of flyeyeball to anywhere you like, and open it from the terminal by typing 'python minimal.py'
+ PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/X11/bin

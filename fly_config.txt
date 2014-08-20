@@ -1,0 +1,13 @@
+{ 'owner': 'arjan', 
+  'tred': 113, 
+  'tgreen' : 90,
+  'tblue' : 36,
+  'vh'  : 15,
+  'vs'  : 190,
+  'vv'  : 107,
+  'tr1'   : 100,
+  'imsize' : (480,360),
+  'magicnumber'   :  -6,
+  'defaultpath'  : self.cfgpath,
+  'formats': ['tif', 'tiff', 'TIFF','jpg']
+}
